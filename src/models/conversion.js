@@ -1,10 +1,10 @@
 import { createStack } from "../controllers/dependencies.js";
 
-let stackSalida = createStack()
-let listaOperadores = createStack()
 
-export const conversion = function(expresion){
-    
+export class Conversion{
+ conversion = function(expresion){
+    let stackSalida = createStack()
+    let listaOperadores = createStack()
 
     expresion = expresion.match(/[0-9]+|[-+*/()]/g)
     expresion = expresion.reverse()
@@ -64,4 +64,5 @@ export const conversion = function(expresion){
     return [stackSalida.pop(),expresionPrefija]
     
 
+}
 }
