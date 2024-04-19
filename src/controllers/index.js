@@ -1,5 +1,4 @@
-//import { conversion } from "../models/conversion.js"
-import { conversion } from "./dependencies.js "
+import { convert } from "./dependencies.js"
 
 const convertir = document.getElementById("btn-con")
 convertir.addEventListener("click",()=>{
@@ -7,7 +6,9 @@ convertir.addEventListener("click",()=>{
     const outputExpresion = document.getElementById("prefija")
     
 
-    let salidas = conversion.conversion(input)
+    let salidas = convert.convert(input)
+  
+
     
     outputExpresion.innerText = "Expresión prefija: " + salidas[1]
     

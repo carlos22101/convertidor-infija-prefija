@@ -1,68 +1,52 @@
 import { createStack } from "../controllers/dependencies.js";
 
-
-export class Conversion{
- conversion = function(expresion){
-    let stackSalida = createStack()
-    let listaOperadores = createStack()
-
-    expresion = expresion.match(/[0-9]+|[-+*/()]/g)
-    expresion = expresion.reverse()
-
-    expresion.forEach(element => {
-        switch (element) {
-            case "+":
-                listaOperadores.push(element)
-                break;
-            case "-":
-                listaOperadores.push(element)
-                break;
-            case "*":
-                listaOperadores.push(element)
-                break;
-            case "/":
-                listaOperadores.push(element)
-                break;
-            
-            case "(":
-                listaOperadores.push(element)
-                listaOperadores.pop()
-                while(listaOperadores.peek() != ")")
-                    stackSalida.push(listaOperadores.pop())
-                listaOperadores.pop()
-                break;
-            case ")":
-                listaOperadores.push(element)
-                break;
-            default:
-                stackSalida.push(element)
-                break;
-            
-        }
-        
-    });
-
+export class conversion {
     
-    
-    while(!(listaOperadores.isEmpty()))
-        stackSalida.push(listaOperadores.pop())
+    constructor() {
+        this.stackSalida = createStack();
+        this.listaOperadores = createStack();
+    }
 
-    expresion = []
-    
+    convert(expresion) {
+        expresion = expresion.match(/[0-9]+|[-+*/()]/g);
+        expresion = expresion.reverse();
 
+        expresion.forEach(element => {
+            switch (element) {
+                case "+":
+                case "-":
+                case "*":
+                case "/":
+                    this.listaOperadores.push(element);
+                    break;
+                case "(":
+                    this.listaOperadores.push(element);
+                    this.listaOperadores.pop();
+                    while (this.listaOperadores.peek() != ")")
+                        this.stackSalida.push(this.listaOperadores.pop());
+                    this.listaOperadores.pop();
+                    break;
+                case ")":
+                    this.listaOperadores.push(element);
+                    break;
+                default:
+                    this.stackSalida.push(element);
+                    break;
+            }
+        });
 
-    while(stackSalida.size() != 0)
-        
-        expresion.push(stackSalida.pop())  
+        while (!this.listaOperadores.isEmpty())
+            this.stackSalida.push(this.listaOperadores.pop());
 
-    let expresionPrefija = expresion.join() 
+        expresion = [];
 
-    expresion.reverse()
+        while (this.stackSalida.size() != 0)
+            expresion.push(this.stackSalida.pop());
 
-   
-  
-    return [stackSalida.pop(),expresionPrefija]
-    
+        let expresionPrefija = expresion.join();
 
-}
+        expresion.reverse();
+
+        return [this.stackSalida.pop(), expresionPrefija];
+    }
 }
